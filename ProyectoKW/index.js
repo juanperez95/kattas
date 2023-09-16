@@ -6,7 +6,7 @@ function showLoadingAnimation() {
   loadingOverlay.style.display = 'flex';
   content.style.display = 'none';
   body.style.overflow = 'hidden';
-  body.style.backgroundColor = 'black'; // Establecer el color de fondo en negro
+  body.style.backgroundColor = 'white'; // Establecer el color de fondo
 }
 
 function hideLoadingAnimation() {
@@ -25,5 +25,5 @@ window.addEventListener('load', function() {
 
   setTimeout(function() {
       hideLoadingAnimation();
-  }, 5000); // Ocultar la animación después de 5000 milisegundos (5 segundos)
+  }, 1000); // Ocultar la animación después de 3000 milisegundos (3 segundos)
 });
