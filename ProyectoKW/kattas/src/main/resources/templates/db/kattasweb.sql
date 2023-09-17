@@ -200,4 +200,6 @@ show tables;
 
 desc insumos;
 
-select * from insumos;
+select * from usuarios;
+
+-- delete from usuarios;
