@@ -1,4 +1,4 @@
-package com.pizzeria.kattas.kattas;
+package com.pizza.kattas.kattas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

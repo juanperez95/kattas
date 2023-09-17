@@ -1,4 +1,4 @@
-package com.pizzeria.kattas.kattas;
+package com.pizza.kattas.kattas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

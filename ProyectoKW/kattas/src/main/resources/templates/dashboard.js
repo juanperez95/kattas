@@ -1,3 +1,27 @@
+// Obtén el botón para abrir el modal y el botón para cerrar el modal
+const openModalBtn = document.getElementById("openModalBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const modal = document.getElementById("myModal");
+
+// Cuando el usuario haga clic en el botón para abrir el modal, muestra el modal
+openModalBtn.addEventListener("click", () => {
+  modal.style.display = "block";
+});
+
+// Cuando el usuario haga clic en el botón para cerrar el modal, oculta el modal
+closeModalBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+// Cuando el usuario haga clic en cualquier lugar fuera del modal, cierra el modal
+window.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+});
+
+
+
 function editar() {
     // Variables iniciales
       let days = 0; // Cantidad de días
