@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-KattasApplication<kattas>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.pizza.kattas.kattas.KattasApplication",
+            "projectName": "kattas",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
