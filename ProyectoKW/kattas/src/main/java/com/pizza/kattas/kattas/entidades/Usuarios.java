@@ -1,8 +1,6 @@
 package com.pizza.kattas.kattas.entidades;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,49 +9,56 @@ import jakarta.persistence.Table;
 public class Usuarios {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String id_usuario;
-    private String nombresd;
+    private String documento;
+    private String nombres;
     private String apellidos;
-    private String email;
+    private String telefono;
+    private String correo;
+    private String fecha_nacimiento;
+    private String genero;
+    private String localidad;
+    private String barrio;
+    private String direccion;
     private String password;
     private String rol;
+
 
     public Usuarios() {
     }
 
-    public Usuarios(String id_usuario, String nombresd, String apellidos, String email, String password, String rol) {
-        this.id_usuario = id_usuario;
-        this.nombresd = nombresd;
+    public Usuarios(String documento, String nombres, String apellidos, String telefono, String correo,
+            String fecha_nacimiento, String genero, String localidad, String barrio, String direccion,
+            String password, String rol) {
+        this.documento = documento;
+        this.nombres = nombres;
         this.apellidos = apellidos;
-        this.email = email;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.genero = genero;
+        this.localidad = localidad;
+        this.barrio = barrio;
+        this.direccion = direccion;
         this.password = password;
         this.rol = rol;
     }
 
-    public Long getId() {
-        return id;
+    
+
+    public String getDocumento() {
+        return documento;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 
-    public String getId_usuario() {
-        return id_usuario;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setId_usuario(String id_usuario) {
-        this.id_usuario = id_usuario;
-    }
-
-    public String getNombresd() {
-        return nombresd;
-    }
-
-    public void setNombresd(String nombresd) {
-        this.nombresd = nombresd;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
     public String getApellidos() {
@@ -64,12 +69,60 @@ public class Usuarios {
         this.apellidos = apellidos;
     }
 
-    public String getEmail() {
-        return email;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getPassword() {
@@ -87,9 +140,5 @@ public class Usuarios {
     public void setRol(String rol) {
         this.rol = rol;
     }
-
-    
-
-    
    
 }

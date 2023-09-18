@@ -198,7 +198,7 @@ create database kattasWeb character set utf8mb4;
 use kattasweb;
 show tables;
 
-desc insumos;
+desc usuarios;
 
 select * from usuarios;
 

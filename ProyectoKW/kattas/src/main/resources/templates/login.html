@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleag.org">
 
 <head>
     <meta charset="UTF-8">
@@ -11,11 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Login</title>
 
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../static/css/login.css" th:href="@{/css/login.css}">
 </head>
 
 <body>
@@ -43,7 +46,7 @@
                     <div class="texto_login2">
                         <h2>Inicia sesión o regístrate para ingresar</h2>
                     </div>
-                    <form action="Controladores/C_Login.php" class="form" method="GET">
+                    <form action="#" class="form" method="GET">
                         <label for="correo">Correo electrónico</label>
                         <input type="email" id="email" class="email" name="email" required>
 
@@ -54,9 +57,13 @@
 
                         <a href="#" class="pie">¿Olvidaste tu contraseña?</a><br>
 
-                        <a href="interfaz2.php" class="pie2">Crear cuenta nueva</a>
+                        <a th:href="@{/home}" class="pie2">Crear cuenta nueva</a>
                     </form>
+
                     <!-- Verificar cookie si no coinciden las contraseñas -->
+                    <div th:if="${param.exito}" class="alert alert-primary" role="alert">
+                        ¡Registro exitoso, ya puede iniciar sesion!
+                    </div>
                 </div>
             </div>
         </div>

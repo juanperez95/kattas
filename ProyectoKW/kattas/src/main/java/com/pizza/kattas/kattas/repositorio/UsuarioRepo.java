@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.pizza.kattas.kattas.entidades.Usuarios;
 
 @Repository("UsuarioRepo")
-public interface UsuarioRepo extends JpaRepository<Usuarios,Long>{
+public interface UsuarioRepo extends JpaRepository<Usuarios,String>{
     
-    public Usuarios findByEmail(String email);
+    public Usuarios findByCorreo(String correo);
 }

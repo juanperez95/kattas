@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleag.org">
 
 <head>
     <meta charset="UTF-8">
@@ -22,7 +22,7 @@
         </div>
         <ul class="menu">
             <li class="active">
-                <a href="#">
+                <a th:href="@{/sesion/dashboard-insumos}">
                     <i class="fa-solid fa-store"></i>
                     <span>Inventario</span>
                 </a>
@@ -199,6 +199,6 @@
         </div>
     </div>
     </div>
-    <script src="dashboard.js"></script>
+    <script src="../static/js/dashboard.js" th:src="@{/js/dashboard.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

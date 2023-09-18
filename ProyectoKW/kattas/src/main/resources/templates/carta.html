@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleag.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
-    <link rel="stylesheet" href="css/carta.css">
+    <link rel="stylesheet" href="../static/css/carta.css" th:href="@{/css/carta.css}">
 </head>
 <body>
     <h1>Carrito de Compras</h1>
@@ -54,7 +54,7 @@
         <p>Total: $0.00</p>
     </div>
 
-    <script src="carta.js"></script>
+    <script src="../static/js/carta.js" th:src="@{/js/carta.js}"></script>
     <script src="https://kit.fontawesome.com/b06d3acf28.js" crossorigin="anonymous"></script>
 
 </body>

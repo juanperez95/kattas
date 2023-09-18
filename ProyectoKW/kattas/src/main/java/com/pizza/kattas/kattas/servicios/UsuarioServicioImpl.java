@@ -1,6 +1,8 @@
 package com.pizza.kattas.kattas.servicios;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,18 @@ public class UsuarioServicioImpl implements UsuarioServicio{
     UsuarioRepo userRepo;
 
     @Override
-    public Usuarios buscarUsuarioEmail(String email) {
-        return userRepo.findByEmail(email);
+    public Usuarios buscarUsuarioEmail(String correo) {
+        return userRepo.findByCorreo(correo);
     }
 
     @Override
     public Usuarios guardarUsuario(Usuarios user) {
         return userRepo.save(user);
+    }
+
+    @Override
+    public List<Usuarios> listarUsuarios() {
+        return userRepo.findAll();
     }
 
 
