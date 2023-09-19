@@ -12,4 +12,10 @@ public interface UsuarioServicio {
     public Usuarios guardarUsuario(Usuarios user);
 
     public List<Usuarios> listarUsuarios();
+
+    public Usuarios actualizarUsuarios(Usuarios user);
+
+    public Usuarios buscarUsuarioId(int id);
+
+    public void borrarUsuario(int id);
 }

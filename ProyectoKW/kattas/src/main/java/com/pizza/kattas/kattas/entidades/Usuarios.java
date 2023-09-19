@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 public class Usuarios {
     
     @Id
-    private String documento;
+    private int documento;
     private String nombres;
     private String apellidos;
     private String telefono;
@@ -26,7 +26,7 @@ public class Usuarios {
     public Usuarios() {
     }
 
-    public Usuarios(String documento, String nombres, String apellidos, String telefono, String correo,
+    public Usuarios(int documento, String nombres, String apellidos, String telefono, String correo,
             String fecha_nacimiento, String genero, String localidad, String barrio, String direccion,
             String password, String rol) {
         this.documento = documento;
@@ -45,11 +45,11 @@ public class Usuarios {
 
     
 
-    public String getDocumento() {
+    public int getDocumento() {
         return documento;
     }
 
-    public void setDocumento(String documento) {
+    public void setDocumento(int documento) {
         this.documento = documento;
     }
 

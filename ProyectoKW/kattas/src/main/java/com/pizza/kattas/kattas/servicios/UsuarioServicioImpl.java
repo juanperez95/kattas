@@ -24,10 +24,25 @@ public class UsuarioServicioImpl implements UsuarioServicio{
     public Usuarios guardarUsuario(Usuarios user) {
         return userRepo.save(user);
     }
-
+    // Listar a los usuarios para mostrara desde la base de datos
     @Override
     public List<Usuarios> listarUsuarios() {
         return userRepo.findAll();
+    }
+    // Actualizar a un usuario
+    @Override
+    public Usuarios actualizarUsuarios(Usuarios user) {
+        return userRepo.save(user);
+    }
+    // Buscar a un usuarios por su id.
+    @Override
+    public Usuarios buscarUsuarioId(int id) {
+        return userRepo.findById(id);
+    }
+    //  Eliminar a un usuario.
+    @Override
+    public void borrarUsuario(int id) {
+        userRepo.deleteById(id);
     }
 
 

@@ -6,7 +6,7 @@ import com.pizza.kattas.kattas.entidades.Insumos;
 
 public interface InsumosServicio {
     
-    public List<Insumos> listarInsumos();
+    public List<Insumos> listarInsumos(String palabra);
     public Insumos agregarInsumo(Insumos insumo);
     public Insumos actualizarInsumo(Insumos insumo);
     public Insumos buscarInsumo(int id);
