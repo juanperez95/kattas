@@ -61,8 +61,10 @@
       </div>
       <div class="user--info">
         <div class="search--box">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Buscar alquiler" />
+          <form th:action="@{/sesion/dashboard-insumos}" method="get">
+            <input type="text" name="palabra" placeholder="Buscar articulo" />
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
         </div>
 
       </div>
@@ -126,9 +128,6 @@
               <label for="cantidad">Cantidad</label>
 
 
-
-
-
               <input th:field="*{cantidad}" type="number" name="contador" id="contador" min="0">
 
             </div>
@@ -138,12 +137,6 @@
           <span id="closeModalButton3" class="close-button"><i class="fa-solid fa-xmark"></i></span>
         </div>
       </div>
-
-
-
-
-
-
 
 
     </div>
@@ -184,17 +177,22 @@
                   <h2>Piña</h2>
                   <h2>Editar insumo</h2>
 
-                  <form id="miFormulario" class="modal_paragraph" th:action="@{/sesion/add-insumo}"
-            th:object="${adicionarInsumo}" method="POST">
+                  <form id="miFormulario" class="modal_paragraph" th:action="@{/sesion/update-insumo}"
+                    th:object="${update_insumo}" method="POST">
+
+                    <div class="formLabels">
+                      <label for="id">ID Insumo</label>
+                      <input th:field="*{nombre}" th:value="${insumo.nombre}" type="number" name="id" id="id" readonly>
+                    </div>
 
                     <div class="formLabels">
                       <label for="nombre">Nombre</label>
-                      <input th:field="*{nombre}" type="text" name="nombre" id="nombre">
+                      <input th:field="*{nombre}" th:value="${insumo.nombre}" type="text" name="nombre" id="nombre">
                     </div>
 
                     <div class="formLabels">
                       <label for="categoria">Categoria</label>
-                      <select th:field="*{categoria}" name="categoria" id="categoria">
+                      <select th:field="*{categoria}" th:value="${insumo.categoria}" name="categoria" id="categoria">
                         <option value="carnes">Carnes</option>
                         <option value="salsas">Salsas</option>
                         <option value="bebidas">Bebidas</option>
@@ -203,7 +201,7 @@
 
                     <div class="formLabels">
                       <label for="estado">Estado</label>
-                      <select th:field="*{estado}" name="estado" id="estado">
+                      <select th:field="*{estado}" th:value="${insumo.estado}" name="estado" id="estado">
                         <option value="disponible">Disponible</option>
                         <option value="agotado">Agotado</option>
                       </select>
@@ -211,11 +209,13 @@
 
                     <div class="formLabels">
                       <label for="fEntrada">Fecha de Entrada</label>
-                      <input th:field="*{fecha_entrada}" type="date" name="fEntrada" id="fEntrada">
+                      <input th:field="*{fecha_entrada}" th:value="${insumo.fecha_entrada}" type="date" name="fEntrada"
+                        id="fEntrada">
                     </div>
                     <div class="formLabels">
                       <label for="fCaducidad">Fecha de Caducidad</label>
-                      <input th:field="*{fecha_vence}" type="date" name="fCaducidad" id="fCaducidad">
+                      <input th:field="*{fecha_vence}" type="date" th:value="${insumo.fecha_vence}" name=fCaducidad
+                        id="fCaducidad">
                     </div>
 
 
@@ -223,8 +223,9 @@
 
 
 
-                      <label for="fCaducidad">Fecha de Caducidad</label>
-                      <input th:field="*{fecha_vence}" type="date" name="fCaducidad" id="fCaducidad">
+                      <label for="fCaducidad">Cantidad</label>
+                      <input th:field="*{cantidad}" type="number" th:value="${insumo.cantidad}" name="cantidad"
+                        id="cantidad">
 
                     </div>
                     <button class="modal_confirmacion" type="submit" value="Enviar" onclick="editar()">Guardar</button>
@@ -236,9 +237,9 @@
 
               <!-- ------------------------------------------------------------------- -->
 
-              <a th:href="@{/sesion/eliminar-insumo/{id}(id=${insumo.id})}" >
+              <a th:href="@{/sesion/eliminar-insumo/{id}(id=${insumo.id})}">
                 <i class="fa-solid fa-trash" style="font-size: 18px"></i></a>
-              
+
             </td>
           </tr>
 

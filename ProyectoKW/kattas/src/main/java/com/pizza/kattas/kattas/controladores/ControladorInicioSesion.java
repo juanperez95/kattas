@@ -35,6 +35,7 @@ public class ControladorInicioSesion {
     public String dashboarInsumos(Model modelos, @RequestParam(name = "palabra", required = false) String palabra){
         modelos.addAttribute("insumos", insumoData.listarInsumos(palabra));
         modelos.addAttribute("adicionarInsumo", new Insumos());
+        modelos.addAttribute("update_insumo", new Insumos());
         return "dashboard_insumos";
     }
 
