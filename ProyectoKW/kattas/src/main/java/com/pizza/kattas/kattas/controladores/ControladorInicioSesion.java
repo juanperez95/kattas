@@ -34,26 +34,27 @@ public class ControladorInicioSesion {
     @GetMapping("/dashboard-insumos") // Recoger parametro desde metodo get para validar si se realiza una busqueda
     public String dashboarInsumos(Model modelos, @RequestParam(name = "palabra", required = false) String palabra){
         modelos.addAttribute("insumos", insumoData.listarInsumos(palabra));
+        modelos.addAttribute("adicionarInsumo", new Insumos());
         return "dashboard_insumos";
     }
 
     // Ruta para crear el insumo.
     @PostMapping("/add-insumo")
-    public String addInsumo(@ModelAttribute("insumo") Insumos insumo, Model modelo){
+    public String addInsumo(@ModelAttribute("adicionarInsumo") Insumos insumo, Model modelo){
         insumoData.agregarInsumo(insumo);
-        return "redirect:/dashboard-insumos?exito"; // Si fue exitoso imprime un mensaje de insumo agregado!.
+        return "redirect:/sesion/dashboard-insumos?exito"; // Si fue exitoso imprime un mensaje de insumo agregado!.
     }
     // Actualzar el insumo.
     @PostMapping("/update-insumo")
     public String actualizarInsumos(@ModelAttribute("update_insumo") Insumos insumo){
         insumoData.actualizarInsumo(insumo);
-        return "redirect:/dashboard-insumos?exito_actualizado";
+        return "redirect:/sesion/dashboard-insumos?exito_actualizado";
     }
 
     // Eliminar un insumo
-    @PostMapping("/eliminar-insumo/{id}")
+    @GetMapping("/eliminar-insumo/{id}")
     public String borrarInsumos(@PathVariable("id") int id){
         insumoData.borrarInsumo(id);
-        return "redirect:/dashboard-insumos?exito_borrado"; // Indicar que fue borrado el insumo.
+        return "redirect:/sesion/dashboard-insumos?exito_borrado"; // Indicar que fue borrado el insumo.
     }
 }
