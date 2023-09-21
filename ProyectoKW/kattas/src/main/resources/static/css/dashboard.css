@@ -196,7 +196,7 @@ option {
   cursor: pointer;
 }
 
-.header--wrapper {
+.header--wrapper { /*Primera sección del inventario*/
   display: flex;
   justify-content: space-between;
   /*Los elementos se distribuyen de lado a lado*/
@@ -220,6 +220,48 @@ option {
 .header--title img {
   width: 150px;
   object-fit: cover;
+}
+
+select#perfil {
+  border: none; /* Elimina el borde */
+  background-color: #01C38E;
+  color: #FFF;
+  border-radius: 10px;
+  width: 150px;
+  padding: 10px;
+}
+
+/* Oculta la primera opción */
+select#perfil option:first-child {
+  display: none;
+}
+
+select#perfil option {
+  border: none; /* Elimina el borde */
+  background-color: #01C38E;
+  color: #FFF;
+  border-radius: 10px;
+}
+
+/* Elimina el borde de enfoque cuando se selecciona el dropdown */
+select#perfil:focus {
+  outline: none;
+  border: none;
+}
+
+select#perfil:focus option {
+  border: none;
+}
+
+
+select#perfil option:hover {
+  background-color: #18b48b; /* Color de fondo en estado "hover" */
+  color: #FFF; /* Color del texto en estado "hover" */
+}
+
+
+select#perfil option:checked {
+  background-color: transparent; /* Elimina el color de fondo predeterminado */
 }
 
 .user--info {

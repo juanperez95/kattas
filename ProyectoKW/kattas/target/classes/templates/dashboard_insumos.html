@@ -57,16 +57,17 @@
   <div class="main--content">
     <div class="header--wrapper">
       <div class="header--title">
-        <h1>Katta' pizza</h1>
+        <h1>Katta's pizza</h1>
       </div>
       <div class="user--info">
-        <div class="search--box">
-          <form th:action="@{/sesion/dashboard-insumos}" method="get">
-            <input type="text" name="palabra" placeholder="Buscar articulo" />
-            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-          </form>
-        </div>
 
+        <select id="perfil" name="perfil">
+          <img src="">
+          <option value="bienvenido">¡Bienvenido!</option>
+          <option value="perfil">Perfil</option>
+          <option value="configuracion">Configuración</option>
+          <option value="cerrarSesion">Cerrar sesión</option>
+        </select>
       </div>
     </div>
 
@@ -74,25 +75,32 @@
 
     <div class="tabular--wrapper">
       <h2 class="main--title">Inventario</h2>
-      <br />
-
-
-
+      <div class="search--box">
+        <form th:action="@{/sesion/dashboard-insumos}" method="get">
+          <input type="text" name="palabra" placeholder="Buscar articulo" />
+          <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+      </div>
+      <br/>
 
       <button id="openModalButton3" style="font-size: 18px;  ">
-        <i class="fa-solid fa-plus" style="font-size: 18px; margin: 0; padding-top: 3px; padding-right: 8px;"></i>
+        <i class="fa-solid fa-plus" style="font-size: 23px; margin: 0; padding-top: 3px; padding-right: 8px;  color: var(--color-texto3);"></i>
         <b>Agregar Insumo</b>
       </button>
+      <a th:href="@{/sesion/dashboard-insumos?format=xlsx}" id="openModalButton3" style="font-size: 18px; text-decoration: none; color: black">
+        <i class="fa-solid fa-file-excel" style="font-size: 23px; margin: 0; padding-top: 3px; padding-right: 8px; color: var(--color-botonesSecundarios);" ></i>
+        <b>Generar reporte</b>
+      </a>
       <div id="myModal3" class="modal">
         <div class="modal-content">
-          <h2>Agregar Insumo</h2>
+          <h1>Agregar Insumo</h1>
 
 
           <form id="miFormulario" class="modal_paragraph" th:action="@{/sesion/add-insumo}"
             th:object="${adicionarInsumo}" method="POST">
 
             <div class="formLabels">
-              <label for="nombre">Nombre</label>
+              <label for="nombre">Nombre del insumo</label>
               <input th:field="*{nombre}" type="text" name="nombre" id="nombre">
             </div>
 
@@ -123,7 +131,7 @@
             </div>
 
 
-            <div class="grupoBotones">
+            <div class="formLabels">
 
               <label for="cantidad">Cantidad</label>
 
@@ -131,12 +139,60 @@
               <input th:field="*{cantidad}" type="number" name="contador" id="contador" min="0">
 
             </div>
-            <button class="modal_confirmacion" type="submit" value="Enviar" onclick="editar()">Guardar</button>
+
+            <div class="botonesCerrarConfirmar">
+              <button class="modal_confirmacion" type="submit" value="Enviar" onclick="editar()">Guardar</button>
+              <button class="modal_close">Cerrar</button>
+            </div>
+
           </form>
-          <button class="modal_close">Cerrar</button>
+
           <span id="closeModalButton3" class="close-button"><i class="fa-solid fa-xmark"></i></span>
         </div>
       </div>
+
+<!-- --------------------------------------------------------------------------------------- -->
+<button id="openModalButton4" style="font-size: 18px;">
+  <i class="fa-solid fa-lock" style="font-size: 23px; margin: 0; padding-top: 3px; padding-right: 8px;  color: red;"></i>
+  <b>Deshabilitados</b>
+</button>
+
+<div id="myModal4" class="modal">
+  <div class="modal-content">
+    <h1>Insumos deshabilitados</h1>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="fecha1">ID Insumo</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Estado</th>
+            <th>Cantidad</th>
+            <th>Fecha Entrada</th>
+            <th>Fecha Caducidad</th>
+            <th class="editar2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="insumo : ${deshabilitados}">
+            <td th:text="${insumo.id}"></td>
+            <td th:text="${insumo.nombre}"></td>
+            <td th:text="${insumo.categoria}"></td>
+            <td th:text="${insumo.estado}"></td>
+            <td th:text="${insumo.cantidad}"></td>
+            <td th:text="${insumo.fecha_entrada}"></td>
+            <td th:text="${insumo.fecha_vence}"></td>
+          </tr>
+          </tbody>
+        </table>
+    
+    </div>
+    <span id="closeModalButton4" class="close-button"><i class="fa-solid fa-xmark"></i></span>
+  </div>
+</div>
+
 
 
     </div>
@@ -174,8 +230,7 @@
               </button>
               <div id="myModal" class="modal">
                 <div class="modal-content">
-                  <h2>Piña</h2>
-                  <h2>Editar insumo</h2>
+                  <h1>Editar Insumo</h1>
 
                   <form id="miFormulario" class="modal_paragraph" th:action="@{/sesion/update-insumo}"
                     th:object="${update_insumo}" method="POST">
@@ -216,29 +271,30 @@
                       <label for="fCaducidad">Fecha de Caducidad</label>
                       <input th:field="*{fecha_vence}" type="date" th:value="${insumo.fecha_vence}" name=fCaducidad
                         id="fCaducidad">
+
                     </div>
 
-
-                    <div class="grupoBotones">
-
-
+                    <div class="formLabels">
 
                       <label for="fCaducidad">Cantidad</label>
                       <input th:field="*{cantidad}" type="number" th:value="${insumo.cantidad}" name="cantidad"
-                        id="cantidad">
+                        id="cantidad">  
+                      </div>  
 
+                    <div class="botonesCerrarConfirmar">
+                      <button class="modal_confirmacion" type="submit" value="Enviar" onclick="editar()">Guardar</button>
+                      <button class="modal_close">Cerrar</button>
                     </div>
-                    <button class="modal_confirmacion" type="submit" value="Enviar" onclick="editar()">Guardar</button>
+            
+
                   </form>
-                  <button class="modal_close">Cerrar</button>
-                  <span id="closeModalButton" class="close-button"><i class="fa-solid fa-xmark"></i></span>
                 </div>
               </div>
 
               <!-- ------------------------------------------------------------------- -->
 
-              <a th:href="@{/sesion/eliminar-insumo/{id}(id=${insumo.id})}">
-                <i class="fa-solid fa-trash" style="font-size: 18px"></i></a>
+              <a th:href="@{/sesion/actualizar-insumo/{id}(id=${insumo.id})}">
+                <i class="fa-solid fa-trash" style="font-size: 18px; color: var(--color-botonesPrimarios);"></i></a>
 
             </td>
           </tr>

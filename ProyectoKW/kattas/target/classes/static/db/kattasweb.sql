@@ -1,8 +1,8 @@
 -- SQLBook: Code
-
+use kattasweb;
 create database kattasWeb character set utf8mb4;
 
-
+delete from insumos_disabled;
 -- use kattasWeb;
 
 
@@ -202,4 +202,7 @@ desc usuarios;
 
 select * from usuarios;
 
+drop database kattasweb;
+
+create database kattasweb;
 -- delete from usuarios;

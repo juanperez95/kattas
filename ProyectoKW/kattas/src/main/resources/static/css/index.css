@@ -340,7 +340,6 @@ section {
 
 
 .image-container:hover img{
-  cursor: crosshair; /*Cambia el cursor por una cruz*/
   width: 500px; /*Tamaño de cuando la imagen se agranda en el hover*/
   filter: contrast(120%); /*El contraste al pasar el mouse, si es mayor el número más contraste*/
   opacity: 50%; /*Entre mayor opacidad se ve más claro*/
@@ -356,6 +355,10 @@ section {
 /*Títulos*/
 
 .titulos{
+  font-family: 'ui-sans-serif', sans-serif;
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: bold;
   position: absolute;
   opacity: 0%;
   bottom: 50%; /* Empujar el botón hacia abajo para que esté fuera inicialmente */
@@ -389,6 +392,7 @@ section {
 /*Botón realizar domicilio*/
 .image-button {
   position: absolute;
+  font-family: 'ui-sans-serif', sans-serif;
   bottom: 43%; /* Posición inicial del botón*/
   left: 50%; /*Posición de izquierda*/
   transform: translateX(-50%);

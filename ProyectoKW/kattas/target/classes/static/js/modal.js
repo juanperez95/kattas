@@ -4,6 +4,9 @@ formulario.addEventListener('submit', function(e){
     e.preventDefault();
 })
 
+
+
+
 document.getElementById("openModalButton3").addEventListener("click", function() {
     document.getElementById("myModal3").style.display = "block";
 });
@@ -17,10 +20,20 @@ document.getElementById("openModalButton").addEventListener("click", function() 
     document.getElementById("myModal").style.display = "block";
 });
 
+document.getElementById("openModalButton4").addEventListener("click", function() {
+  document.getElementById("myModal4").style.display = "block";
+});
+
+// Función para cerrar el modal
+document.getElementById("closeModalButton4").addEventListener("click", function() {
+  document.getElementById("myModal4").style.display = "none";
+});
 // Función para cerrar el modal
 document.getElementById("closeModalButton").addEventListener("click", function() {
     document.getElementById("myModal").style.display = "none";
 });
+
+
 
 
 
@@ -40,7 +53,7 @@ function editar() {
         formulario.submit()
 
         Swal.fire({
-          text: `Insumo modificado`,
+          text: `Insumo agregado`,
           icon: 'success',
           iconColor: '#01C38E',
           customClass: {
