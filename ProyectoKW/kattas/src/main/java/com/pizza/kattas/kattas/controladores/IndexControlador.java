@@ -1,6 +1,7 @@
 package com.pizza.kattas.kattas.controladores;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.pizza.kattas.kattas.entidades.Insumos;
 import com.pizza.kattas.kattas.entidades.Usuarios;
 import com.pizza.kattas.kattas.servicios.InsumosServicio;
 import com.pizza.kattas.kattas.servicios.UsuarioServicio;
@@ -27,9 +29,11 @@ public class IndexControlador {
     @GetMapping("/addroles")
     public String index(Model modelo) {
         List<Usuarios> listaUser = new ArrayList();
-        listaUser.add(new Usuarios("10", "juan", "perez", "3213217777", "admin@gmail.com", "1995-08-19", "Masculino", "Suba", "Compartir", "Cra 115", "321", "role_admin"));
-        listaUser.add(new Usuarios("10", "sergio", "pinzon", "3213217777", "admin@gmail.com", "2004-08-19", "Masculino", "Fontibon", "No se", "Cra 115", "321", "role_emp"));
-        listaUser.add(new Usuarios("10", "jayson", "vargas", "3213217777", "admin@gmail.com", "2001-08-19", "Masculino", "Engativa", "No se", "Cra 115", "321", "role_user"));
+        listaUser.add(new Usuarios(10, "juan", "perez", "3213217777", "admin@gmail.com", "1995-08-19", "Masculino", "Suba", "Compartir", "Cra 115", "321", "role_admin"));
+        listaUser.add(new Usuarios(20, "sergio", "pinzon", "3213217777", "emp@gmail.com", "2004-08-19", "Masculino", "Fontibon", "No se", "Cra 115", "321", "role_emp"));
+        listaUser.add(new Usuarios(30, "jayson", "vargas", "3213217777", "user@gmail.com", "2001-08-19", "Masculino", "Engativa", "No se", "Cra 115", "321", "role_user"));
+        Insumos in = new Insumos("jamon", "carnes", "existente", 0, Date.valueOf("2023-08-19"), Date.valueOf("2023-08-20"));
+        insumoServicio.agregarInsumo(in);
         for(Usuarios user : listaUser){
             userServicio.guardarUsuario(user);
         }

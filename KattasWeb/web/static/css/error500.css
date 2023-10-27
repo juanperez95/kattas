@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap');*{
+  font-family: 'ui-sans-serif', sans-serif;
+}
+*{
+    font-family: 'ui-sans-serif', sans-serif;
+}
+
+
+body{
+    background-color: rgb(243, 243, 243);
+    
+}
+
+:root {
+    --color-fondo:#0F0F0F;
+    --color-fondo2: #F6F1F1;
+    --color-fondo3: #38322F;
+    --color-texto: #F3F3F3;
+    --color-texto2: #23434F;
+    --color-texto3: #000000;
+    --color-botonesPrimarios:#C0252A;
+    /*--color-botonesPrimarios:#C21015;*/  
+    /*--color-botonesPrimarios:#CD3415;*/  
+    --color-botonesSecundarios: #F3F3F3; 
+    --color-HoverBotones: #94080d;
+  }
+
+
+  h1 {
+    font-family: 'ui-sans-serif', sans-serif;
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: bold;
+    font-size: 500%;
+  }
+
+.titulo{
+    position: absolute;
+    font-family: 'ui-sans-serif', sans-serif;
+    font-size: 150px;  
+    color: rgb(0, 0, 0);
+    width: 25%;
+    top: 200px;
+    left: 500px;
+    
+
+}
+.titulo2{
+    position: absolute;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 400px;
+    top: 110px;
+    color: rgb(255, 140, 0);
+    left: 240px;
+    
+}
+
+.imagen{
+    position: absolute;
+    
+    left: 52%;
+    top:30%;
+    width:40%;
+}
+p{
+    position: absolute;
+    font-size: 50px;
+    top: 50px;
+    left: 230px;
+    justify-content: left;
+}
+.inter{
+    height: 70px;
+    width: 60px;
+    left:65%;
+    top:57%;
+    animation-name: mover;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    position: absolute;
+}
+@keyframes mover {
+    0%{
+        transform: translateY(25%);
+    }
+    
+}
+.logo{
+    position: absolute;
+    left: 70%;
+    top:5%;
+    width:15%;
+}
+
+
