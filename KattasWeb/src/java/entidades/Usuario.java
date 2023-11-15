@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author familia perez
+ * @author Roberto_Diaz
  */
 @Entity
 @Table(name = "usuario")
@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdentificacion", query = "SELECT u FROM Usuario u WHERE u.identificacion = :identificacion"),
+    @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion"),
     @NamedQuery(name = "Usuario.findByContrasena", query = "SELECT u FROM Usuario u WHERE u.contrasena = :contrasena"),
     @NamedQuery(name = "Usuario.findByNombres", query = "SELECT u FROM Usuario u WHERE u.nombres = :nombres"),
     @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos"),
@@ -46,9 +47,11 @@ public class Usuario implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
     @Column(name = "identificacion")
-    private String identificacion;
+    private Integer identificacion;
+    @Size(max = 70)
+    @Column(name = "direccion")
+    private String direccion;
     @Size(max = 100)
     @Column(name = "contrasena")
     private String contrasena;
@@ -87,16 +90,24 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(String identificacion) {
+    public Usuario(Integer identificacion) {
         this.identificacion = identificacion;
     }
 
-    public String getIdentificacion() {
+    public Integer getIdentificacion() {
         return identificacion;
     }
 
-    public void setIdentificacion(String identificacion) {
+    public void setIdentificacion(Integer identificacion) {
         this.identificacion = identificacion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getContrasena() {

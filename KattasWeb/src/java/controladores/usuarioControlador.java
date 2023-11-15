@@ -15,9 +15,14 @@ import facades.UsuarioFacade;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -27,10 +32,28 @@ import javax.ejb.EJB;
 @SessionScoped
 public class usuarioControlador implements Serializable {
 
-    private Usuario usuario;
+    private Usuario usuario, usuarioSesion;
     private Habilitado habilitado;
     private Perfil perfil;
     private Cargo cargo;
+    private int identificacion=0;
+    private String email, clave;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
     
     @EJB
     private UsuarioFacade usuFacade;
@@ -47,7 +70,21 @@ public class usuarioControlador implements Serializable {
         habilitado= new Habilitado();
         cargo=new Cargo();
         perfil=new Perfil();
+        usuarioSesion = this.retornoSesion();
     }
+
+    public int getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(int identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    
+
+    
+    
     
     public usuarioControlador() {
     }
@@ -85,13 +122,18 @@ public class usuarioControlador implements Serializable {
     }
     
     
-    public String agregarUsuario(){
-        usuario.setFkPerfil(perfilFacade.find(perfil.getIdPerfil()));
-        usuario.setFkHabilitado(habilitadoFacade.find(habilitado.getIdHabilitado()));
-        usuario.setFkidCargo(cargoFacade.find(cargo.getIdCargo()));
+    public String agregarUsuario() throws ParseException{
+        Date fecha = new Date();        
+        DateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+        String fechaTemporal = formato.format(fecha);
+        usuario.setFechaRegistro(formato.parse(fechaTemporal));
+        usuario.setFkPerfil(perfilFacade.find(3));
+        usuario.setFkHabilitado(habilitadoFacade.find(1));
+        usuario.setFkidCargo(cargoFacade.find(4));
         usuFacade.create(usuario);
-        usuario = new Usuario();
-        return "usuarioConsultar";
+        usuario = new Usuario();     
+        
+        return "dashboardUsuarios?cedula=xx";
         
     }
     
@@ -101,12 +143,15 @@ public class usuarioControlador implements Serializable {
     
     public String preEditar(Usuario usuario){
         this.usuario= usuario;
-        return "usuarioEditar";
+        return "editarUsuario";
     }
     public String editar(){
+        usuario.setFkPerfil(perfilFacade.find(perfil.getIdPerfil()));
+        usuario.setFkHabilitado(habilitadoFacade.find(habilitado.getIdHabilitado()));
+        usuario.setFkidCargo(cargoFacade.find(cargo.getIdCargo()));
         usuFacade.edit(usuario);
         usuario = new Usuario();
-        return "usuarioConsultar";
+        return "dashboardUsuarios";
         
     }
     public void eliminar(Usuario usuario){
@@ -114,5 +159,24 @@ public class usuarioControlador implements Serializable {
         
     }
     
+    public Usuario filtro(){
+        System.out.println(usuario.getContrasena());        
+        return usuFacade.find(identificacion);       
+    }
+    
+    
+    public String validarLogin(){
+        Usuario user = null;
+        user = usuFacade.UserLogin(clave, email);
+        if(user != null){    
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userSession", user);
+            return "dashboardUsuarios";
+        }
+        return "";
+    }
+    
+    public Usuario retornoSesion(){
+        return (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSession");
+    }
     
 }

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author familia perez
+ * @author Roberto_Diaz
  */
 @Entity
 @Table(name = "habilitado")

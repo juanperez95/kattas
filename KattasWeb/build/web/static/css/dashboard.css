@@ -108,7 +108,7 @@ option {
   /*Anchura de la barra de navegación*/
   height: 100vh;
   /*Altura de la barra de navegación*/
-  padding: 0 1.7rem;
+  
   color: var(--color-texto);
   transition: all 0.5s linear;
   background-color: var(--color-fondo);
@@ -196,7 +196,7 @@ option {
   cursor: pointer;
 }
 
-.header--wrapper { /*Primera sección del inventario*/
+.header--wrapper {
   display: flex;
   justify-content: space-between;
   /*Los elementos se distribuyen de lado a lado*/
@@ -220,48 +220,6 @@ option {
 .header--title img {
   width: 150px;
   object-fit: cover;
-}
-
-select#perfil {
-  border: none; /* Elimina el borde */
-  background-color: #01C38E;
-  color: #FFF;
-  border-radius: 10px;
-  width: 150px;
-  padding: 10px;
-}
-
-/* Oculta la primera opción */
-select#perfil option:first-child {
-  display: none;
-}
-
-select#perfil option {
-  border: none; /* Elimina el borde */
-  background-color: #01C38E;
-  color: #FFF;
-  border-radius: 10px;
-}
-
-/* Elimina el borde de enfoque cuando se selecciona el dropdown */
-select#perfil:focus {
-  outline: none;
-  border: none;
-}
-
-select#perfil:focus option {
-  border: none;
-}
-
-
-select#perfil option:hover {
-  background-color: #18b48b; /* Color de fondo en estado "hover" */
-  color: #FFF; /* Color del texto en estado "hover" */
-}
-
-
-select#perfil option:checked {
-  background-color: transparent; /* Elimina el color de fondo predeterminado */
 }
 
 .user--info {
@@ -460,7 +418,44 @@ tfoot td {
 }
 
 
+/* Estilo para el modal */
+.modal {
+  display: none; /* Oculta el modal por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+  z-index: 1;
+  overflow: auto;
+}
 
+/* Estilo para el contenido del modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+/* Estilo para el botón de cerrar (si deseas agregarlo) */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 
 .swal2-title {
