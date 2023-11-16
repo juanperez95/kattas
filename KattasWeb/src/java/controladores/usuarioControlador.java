@@ -12,6 +12,7 @@ import facades.CargoFacade;
 import facades.HabilitadoFacade;
 import facades.PerfilFacade;
 import facades.UsuarioFacade;
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -32,13 +34,22 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class usuarioControlador implements Serializable {
 
-    private Usuario usuario, usuarioSesion;
+    private Usuario usuario, usuarioSesion; // usuarioSesion va a tenern el objeto en el diccionario para la sesion.
     private Habilitado habilitado;
     private Perfil perfil;
     private Cargo cargo;
-    private int identificacion=0;
+    private int identificacion = 0, validar = 0;
     private String email, clave;
 
+    public int getValidar() {
+        return validar;
+    }
+
+    public void setValidar(int validar) {
+        this.validar = validar;
+    }
+   
+    
     public String getEmail() {
         return email;
     }
@@ -54,7 +65,7 @@ public class usuarioControlador implements Serializable {
     public void setClave(String clave) {
         this.clave = clave;
     }
-    
+
     @EJB
     private UsuarioFacade usuFacade;
     @EJB
@@ -63,13 +74,13 @@ public class usuarioControlador implements Serializable {
     private PerfilFacade perfilFacade;
     @EJB
     private HabilitadoFacade habilitadoFacade;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         usuario = new Usuario();
-        habilitado= new Habilitado();
-        cargo=new Cargo();
-        perfil=new Perfil();
+        habilitado = new Habilitado();
+        cargo = new Cargo();
+        perfil = new Perfil();
         usuarioSesion = this.retornoSesion();
     }
 
@@ -81,11 +92,14 @@ public class usuarioControlador implements Serializable {
         this.identificacion = identificacion;
     }
 
-    
+    public Usuario getUsuarioSesion() {
+        return usuarioSesion;
+    }
 
-    
-    
-    
+    public void setUsuarioSesion(Usuario usuarioSesion) {
+        this.usuarioSesion = usuarioSesion;
+    }
+
     public usuarioControlador() {
     }
 
@@ -120,10 +134,9 @@ public class usuarioControlador implements Serializable {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-    
-    
-    public String agregarUsuario() throws ParseException{
-        Date fecha = new Date();        
+
+    public String agregarUsuario() throws ParseException {
+        Date fecha = new Date();
         DateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
         String fechaTemporal = formato.format(fecha);
         usuario.setFechaRegistro(formato.parse(fechaTemporal));
@@ -131,52 +144,72 @@ public class usuarioControlador implements Serializable {
         usuario.setFkHabilitado(habilitadoFacade.find(1));
         usuario.setFkidCargo(cargoFacade.find(4));
         usuFacade.create(usuario);
-        usuario = new Usuario();     
-        
+        usuario = new Usuario();
+
         return "dashboardUsuarios?cedula=xx";
-        
+
     }
-    
-    public List<Usuario> consultarUsuario(){
+
+    public List<Usuario> consultarUsuario() {
         return usuFacade.findAll();
     }
-    
-    public String preEditar(Usuario usuario){
-        this.usuario= usuario;
+
+    public String preEditar(Usuario usuario) {
+        this.usuario = usuario;
         return "editarUsuario";
     }
-    public String editar(){
+
+    public String editar() {
         usuario.setFkPerfil(perfilFacade.find(perfil.getIdPerfil()));
         usuario.setFkHabilitado(habilitadoFacade.find(habilitado.getIdHabilitado()));
         usuario.setFkidCargo(cargoFacade.find(cargo.getIdCargo()));
         usuFacade.edit(usuario);
         usuario = new Usuario();
         return "dashboardUsuarios";
-        
+
     }
-    public void eliminar(Usuario usuario){
+
+    public void eliminar(Usuario usuario) {
         usuFacade.remove(usuario);
-        
+
     }
-    
-    public Usuario filtro(){
-        System.out.println(usuario.getContrasena());        
-        return usuFacade.find(identificacion);       
+
+    // Filtro para buscar por medio del documento del usuario.
+    public Usuario filtro() {
+        System.out.println(usuario.getContrasena());
+        return usuFacade.find(identificacion);
     }
-    
-    
-    public String validarLogin(){
+
+    // Validar el inicio de sesion
+    public String validarLogin() throws IOException {
         Usuario user = null;
-        user = usuFacade.UserLogin(clave, email);
-        if(user != null){    
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userSession", user);
-            return "dashboardUsuarios";
+        user = usuFacade.UserLogin(clave, email); // Recibir el objeto de la clase Usuario.
+        if (user != null) {
+            validar = 0;
+            // Validar los roles y redirigir a la pagina correspondiente.
+            switch (user.getFkPerfil().getIdPerfil()) {
+                case 1:
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userSession", user);                   
+                    return "dashboardUsuarios";
+                case 3:
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userSession", user);
+                    return "dashboardUsuarios";
+            }       
         }
+        validar = 1; // La variable sirve para validar las alertas.
         return "";
     }
-    
-    public Usuario retornoSesion(){
-        return (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSession");
+
+    // Crear la sesion para cuando se haya validado toda la informacion del usuario.
+    public Usuario retornoSesion() {
+        return (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userSession");
     }
-    
+
+    // Eliminar el mapeo para cuando se cierre la sesion.
+    public void cerrarSesion() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("userSession");
+        ExternalContext redirigir = FacesContext.getCurrentInstance().getExternalContext(); // Redirigir a las paginas dentro del proyecto.
+        redirigir.redirect(redirigir.getRequestContextPath() + "/index.xhtml");
+    }
+
 }

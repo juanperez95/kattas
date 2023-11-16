@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <head>
         <meta charset="UTF-8"></meta>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
@@ -36,7 +37,7 @@
 
         <div class="content">
             <div class=""></div>
-            <nav class="navbar fixed-top" style="background-color: var(--color-fondo); height: 12%;">
+            <nav class="navbar fixed-top" style="background-color: var(--color-fondo); height: 12%;">              
                 <div class="navega flex-colum flex-md-row">
                     <a class="navbar-brand mr-auto" style="top: 0;" href="#">
                         <img src="static/images/Logokatta´s_sin fondo.webp" style="top: 0; max-height: 100px;" alt="logo"></img></a>
@@ -59,10 +60,13 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <c:if test="#{usuarioControlador.retornoSesion().nombres != null}"> <!-- Condicion para mostrar el nombre del usuario -->
+                                <h5><h:outputText value="Bienvenido/a #{usuarioControlador.retornoSesion().nombres} #{usuarioControlador.retornoSesion().apellidos}"/></h5>
+                            </c:if>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#" style="color: var(--color-texto)">Página
                                     principal</a><br/>
-                            </li>
+                            </li>                          
                             <li class="nav-item">
                                 <a class="nav-link" href="#" style="color: var(--color-texto)">Carta</a><br/>
                             </li>
@@ -78,6 +82,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="" style="color: var(--color-texto)">Contáctanos: Comunícate aquí</a>
                             </li>
+                            <c:if test="#{usuarioControlador.retornoSesion().email != null}">
+                                <li class="nav-item">
+                                    <h:form>
+                                        <h:commandLink class="nav-link" value="Cerrar Sesion" style="color: var(--color-texto)" action="#{usuarioControlador.cerrarSesion()}"/>
+                                    </h:form>
+                                </li>
+                            </c:if>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                    style="color: var(--color-texto) ">

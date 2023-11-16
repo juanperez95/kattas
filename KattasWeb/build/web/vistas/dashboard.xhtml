@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -40,24 +41,27 @@
                         <span>Usuarios</span>
                     </a>
                 </li>
-                <li >
-                    <a href="#">
-                        <i class="fa-solid fa-store"></i>
-                        <span>Inventario</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span>Ventas</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-truck-fast"></i>
-                        <span>Domicilios</span>
-                    </a>
-                </li>
+                <c:if test="#{usuarioControlador.retornoSesion().fkPerfil.idPerfil != 3}"> <!-- Mostrar a los usuarios estas opciones 
+                    diferentes al perfil de cliente -->
+                    <li >
+                        <a href="#">
+                            <i class="fa-solid fa-store"></i>
+                            <span>Inventario</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>Ventas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <span>Domicilios</span>
+                        </a>
+                    </li>
+                </c:if>
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-gears"></i>
@@ -67,7 +71,9 @@
                 <li class="logout">
                     <a href="#">
                         <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>Cerrar sesión</span>
+                        <h:form>
+                            <h:commandLink action="#{usuarioControlador.cerrarSesion()}"><span>Cerrar sesión</span></h:commandLink>
+                        </h:form>                       
                     </a>
                 </li>
             </ul>
@@ -77,7 +83,7 @@
 
 
         <div class="main--content">
-            
+
             <ui:insert name="content">
 
             </ui:insert>

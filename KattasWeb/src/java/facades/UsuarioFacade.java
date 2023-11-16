@@ -27,10 +27,13 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     
     public Usuario UserLogin(String clave, String email){
         List<Usuario> listaUsuario = new ArrayList<>();
-        Query consulta = em.createQuery("SELECT u FROM usuario WHERE email=:email AND contrasena=:clave");
+        Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.email=:email and u.contrasena=:clave");
         consulta.setParameter("email", email);
         consulta.setParameter("clave", clave);
         listaUsuario = consulta.getResultList();
+        if(listaUsuario.isEmpty()){
+            return null;
+        }
         return listaUsuario.get(0);
     }
     
