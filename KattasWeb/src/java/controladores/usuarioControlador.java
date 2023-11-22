@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import email.Mailer;
 import entidades.Cargo;
 import entidades.Habilitado;
 import entidades.Perfil;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,8 +51,7 @@ public class usuarioControlador implements Serializable {
     public void setValidar(int validar) {
         this.validar = validar;
     }
-   
-    
+
     public String getEmail() {
         return email;
     }
@@ -135,18 +137,27 @@ public class usuarioControlador implements Serializable {
         this.cargo = cargo;
     }
 
-    public String agregarUsuario() throws ParseException {
+    public String agregarUsuario() throws ParseException, UnsupportedEncodingException, NoSuchAlgorithmException {
         Date fecha = new Date();
         DateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
         String fechaTemporal = formato.format(fecha);
-        usuario.setFechaRegistro(formato.parse(fechaTemporal));
-        usuario.setFkPerfil(perfilFacade.find(3));
-        usuario.setFkHabilitado(habilitadoFacade.find(1));
-        usuario.setFkidCargo(cargoFacade.find(4));
-        usuFacade.create(usuario);
-        usuario = new Usuario();
 
-        return "dashboardUsuarios?cedula=xx";
+        if (!usuFacade.CorreoLogin(usuario.getEmail())) {
+            usuario.setFechaRegistro(formato.parse(fechaTemporal));
+            usuario.setFkPerfil(perfilFacade.find(3));
+            usuario.setFkHabilitado(habilitadoFacade.find(1));
+            usuario.setFkidCargo(cargoFacade.find(4));
+            usuario.setContrasena(usuFacade.encriptarClave(usuario.getContrasena()));
+            usuFacade.create(usuario);
+            //Mailer.send(usuario.getEmail(), "Registro Kattas Web", mensajeConEstilo());
+            usuario = new Usuario();
+            validar = 0;
+            return "login";
+        } else {
+            validar = 1;
+            return "agregarUsuario";
+
+        }
 
     }
 
@@ -170,7 +181,8 @@ public class usuarioControlador implements Serializable {
     }
 
     public void eliminar(Usuario usuario) {
-        usuFacade.remove(usuario);
+        usuario.setFkHabilitado(habilitadoFacade.find(2));
+        usuFacade.edit(usuario);
 
     }
 
@@ -181,23 +193,31 @@ public class usuarioControlador implements Serializable {
     }
 
     // Validar el inicio de sesion
-    public String validarLogin() throws IOException {
+    public String validarLogin() throws IOException, NoSuchAlgorithmException {
+
         Usuario user = null;
         user = usuFacade.UserLogin(clave, email); // Recibir el objeto de la clase Usuario.
+
         if (user != null) {
             validar = 0;
+
+            if (user.getFkHabilitado().getIdHabilitado() == 2) {
+                validar = 2;
+                return "login";
+            }
             // Validar los roles y redirigir a la pagina correspondiente.
             switch (user.getFkPerfil().getIdPerfil()) {
                 case 1:
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userSession", user);                   
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userSession", user);
                     return "dashboardUsuarios";
                 case 3:
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userSession", user);
                     return "dashboardUsuarios";
-            }       
+            }
         }
         validar = 1; // La variable sirve para validar las alertas.
         return "";
+
     }
 
     // Crear la sesion para cuando se haya validado toda la informacion del usuario.
@@ -210,6 +230,11 @@ public class usuarioControlador implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("userSession");
         ExternalContext redirigir = FacesContext.getCurrentInstance().getExternalContext(); // Redirigir a las paginas dentro del proyecto.
         redirigir.redirect(redirigir.getRequestContextPath() + "/index.xhtml");
+    }
+
+    public String mensajeConEstilo() {
+        return "<img src='https://i.postimg.cc/GhrDCHvp/Logokatta-s-sin-fondo.png'/ style=\"float: left; width: 300px;\">" + "<p style=\"color: black;font-weight: bold; font-size: 20px; top: 50px;\"> Gracias por formar parte de nuestra comunidad.</p> ";
+
     }
 
 }

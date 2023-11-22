@@ -59,11 +59,16 @@
 
                             <h:outputLink value="#">¿Olvidaste tu contraseña?</h:outputLink><br/>
 
-                            <h:outputLink value="#">Crear cuenta nueva</h:outputLink>
+                            <h:outputLink value="agregarUsuario.xhtml">Crear cuenta nueva</h:outputLink>
                         </h:form>
                         <c:if test="#{usuarioControlador.validar == 1}">
                             <div class="alert alert-danger" role="alert">
                                 ¡Oops!, ¿Haz olvidado la contraseña?.
+                            </div>
+                        </c:if>
+                        <c:if test="#{usuarioControlador.validar == 2}">
+                            <div class="alert alert-danger" role="alert">
+                                ¡Este usuario no ha sido habilitado!.
                             </div>
                         </c:if>
 

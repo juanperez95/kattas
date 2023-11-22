@@ -34,7 +34,7 @@
 
             <div class="col-md-4">
                 <h:outputLabel for="cedula" value="N° Documento" styleClass="form-label" />
-                <h:inputText id="cedula" styleClass="form-control rounded-xl" value="#{usuarioControlador.usuario.identificacion}" required="true" />
+                <h:inputText id="cedula" styleClass="form-control rounded-xl" value="#{usuarioControlador.usuario.identificacion}" required="true" disabled="true"/>
             </div>
             <div class="col-md-4">
                 <h:outputLabel for="nome" value="Nombres" styleClass="form-label" />
@@ -69,7 +69,7 @@
             </div>
             <div class="col-md-4">
                 <h:outputLabel for="email" value="Correo Electrónico" styleClass="form-label" />
-                <h:inputText  styleClass="form-control all" id="correo" value="#{usuarioControlador.usuario.email}" required="true" />
+                <h:inputText  styleClass="form-control all" id="correo" value="#{usuarioControlador.usuario.email}" required="true" disabled="true"/>
             </div>
             <div>
                 <h:outputLabel value="Estado" for="fkHabilitado" /><br></br>
@@ -91,7 +91,7 @@
             </div>
 
             <div class="col-12">
-                <h:commandButton value="¡Registrarse!" styleClass="btn-custom" action="#{usuarioControlador.editar()}" />
+                <h:commandButton value="¡Confirmar!" styleClass="btn-custom" action="#{usuarioControlador.editar()}" />
             </div>
 
         </h:form>
