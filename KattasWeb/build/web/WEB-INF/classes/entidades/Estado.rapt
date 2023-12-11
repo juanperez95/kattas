@@ -1,0 +1,11 @@
+entidades/Cargo_.java
+entidades/Pedido_.java
+entidades/Producto_.java
+entidades/Tamañoproducto_.java
+entidades/Insumo_.java
+entidades/Perfil_.java
+entidades/ProductosInsumos_.java
+entidades/Habilitado_.java
+entidades/Estado_.java
+entidades/Categoria_.java
+entidades/Venta_.java

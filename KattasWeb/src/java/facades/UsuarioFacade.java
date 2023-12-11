@@ -5,7 +5,6 @@ import entidades.Usuario;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,7 +13,10 @@ import javax.persistence.Query;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
-
+/**
+ *
+ * @author Roberto_Diaz
+ */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
 
@@ -30,7 +32,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
     
-    public Usuario UserLogin(String clave, String email) throws NoSuchAlgorithmException{
+        public Usuario UserLogin(String clave, String email) throws NoSuchAlgorithmException{
         clave=encriptarClave(clave);
         List<Usuario> listaUsuario = new ArrayList<>();
         Query consulta = em.createQuery("SELECT u FROM Usuario u WHERE u.email=:email and u.contrasena=:clave");
@@ -62,4 +64,5 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         byte[]datosfinal=Base64.encodeBase64(datos);        
         return new String(datosfinal);
     }
+    
 }

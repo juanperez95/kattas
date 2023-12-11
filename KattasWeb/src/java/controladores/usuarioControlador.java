@@ -18,16 +18,20 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import static java.lang.Integer.getInteger;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.primefaces.util.LangUtils;
 
 /**
  *
@@ -35,14 +39,17 @@ import javax.faces.context.FacesContext;
  */
 @Named(value = "usuarioControlador")
 @SessionScoped
+
 public class usuarioControlador implements Serializable {
 
-    private Usuario usuario, usuarioSesion; // usuarioSesion va a tenern el objeto en el diccionario para la sesion.
+    private Usuario usuario, usuarioSesion; // usuarioSesion va a tener el objeto en el diccionario para la sesion.
     private Habilitado habilitado;
     private Perfil perfil;
     private Cargo cargo;
     private int identificacion = 0, validar = 0;
     private String email, clave;
+    private boolean globalFilterOnly;
+    private List<Usuario> UsuarioLista;
 
     public int getValidar() {
         return validar;
@@ -68,6 +75,14 @@ public class usuarioControlador implements Serializable {
         this.clave = clave;
     }
 
+    public boolean isGlobalFilterOnly() {
+        return globalFilterOnly;
+    }
+
+    public void setGlobalFilterOnly(boolean globalFilterOnly) {
+        this.globalFilterOnly = globalFilterOnly;
+    }
+
     @EJB
     private UsuarioFacade usuFacade;
     @EJB
@@ -84,6 +99,16 @@ public class usuarioControlador implements Serializable {
         cargo = new Cargo();
         perfil = new Perfil();
         usuarioSesion = this.retornoSesion();
+        globalFilterOnly = false;
+        UsuarioLista = usuFacade.findAll();
+    }
+
+    public List<Usuario> getUsuarioLista() {
+        return UsuarioLista;
+    }
+
+    public void setUsuarioLista(List<Usuario> UsuarioLista) {
+        this.UsuarioLista = UsuarioLista;
     }
 
     public int getIdentificacion() {
@@ -237,4 +262,25 @@ public class usuarioControlador implements Serializable {
 
     }
 
+    public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+        if (LangUtils.isBlank(filterText)) {
+            return true;
+        }
+        int filterInt = getInteger(filterText);
+
+        Usuario usuario = (Usuario) value;
+        return usuario.getNombres().toLowerCase().contains(filterText)
+                || usuario.getApellidos().toLowerCase().contains(filterText)
+                || usuario.getFechaNacimiento().toString().toLowerCase().contains(filterText)
+                || usuario.getIdentificacion() < filterInt;
+    }
+
+    private int getInteger(String string) {
+        try {
+            return Integer.parseInt(string);
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+    }
 }

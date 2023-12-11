@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./dashboard.xhtml">
+
+            <ui:define name="left">
+
+            </ui:define>
+
+            <ui:define name="content">
+
+                <div class="tabular--wrapper">
+                    <div class="p:dataTable-container">
+                        <h3 class="main--title">Insumos</h3><br></br>
+
+                        <h:form id="añadirInsumo">   
+                            <p:commandButton action="#{insumoControlador.insumoVacio()}" resetValues="true" value="Añadir Insumo" onclick="PF('modal').show()" style="margin-bottom: 10px;"/>                           
+                            <p:dialog id="dialog" header="Añadir Insumo" widgetVar="modal" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="idInsumo" value="ID:" />
+                                    <p:inputText id="idInsumo" value="#{insumoControlador.insumo.idInsumo}" title="IdInsumo" required="true" readonly="true"/>
+
+                                    <h:outputLabel value="Nombre Insumo:" for="nombreInsumo" />
+                                    <p:inputText id="nombreInsumo" value="#{insumoControlador.insumo.nombreInsumo}" title="Nombre del insumo" required="true"/>
+
+                                    <h:outputLabel value="Fecha de Vencimiento:" for="fechaVencimiento" />
+                                    <p:calendar id="fechaVencimiento" value="#{insumoControlador.insumo.fechaVencimiento}"  pattern="yyyy/MM/dd" />
+
+                                    <h:outputLabel value="Cantidad Existente:" for="cantidadExistente" />
+                                    <p:inputText id="cantidadExistente" value="#{insumoControlador.insumo.cantidadExistente}" title="Cantidad Existente" required="true"/>
+
+                                    <h:outputLabel value="Categoria:" for="fkidCategoria" />
+                                    <h:selectOneMenu id="fkidCategoria" value="#{insumoControlador.categoria.idCategoria}" title="Categoria">
+
+                                        <f:selectItems value="#{categoriaControlador.consultarCategorias()}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombreCategoria}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                                <p:growl id="message" showDetail="true"/>
+                                <h:panelGrid columns="2">
+                                    <p:commandButton   value="Guardar" action="#{insumoControlador.crearInsumo()}" oncomplete="PF('modal').hide()"  resetValues="true" update=":tablaInsumos: dialog message"><p:confirm header="Confirmación" message="¿Estas seguro de añadir un nuevo insumo?" icon="pi pi-exclamation-triangle"/></p:commandButton>
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+                                    </p:confirmDialog>
+                                    <p:commandButton value="Cancelar" onclick="PF('modal').hide()" />
+                                </h:panelGrid>
+                            </p:dialog>
+                        </h:form>
+
+
+
+
+                        <h:form id="tablaInsumos">  
+                            <p:dataTable id="datatable" value="#{insumoControlador.consultarInsumos()}" var="item" rows="7"
+                                         paginator="true" paginatorPosition="bottom" 
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Resultados" >
+                                <p:column styleClass="cabecera" style="border-top-left-radius: 10px;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Id"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idInsumo}"/>
+                                </p:column>
+                                <p:column styleClass="cabecera">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre Insumo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.nombreInsumo}"/>
+                                </p:column>
+                                <p:column styleClass="cabecera">
+                                    <f:facet name="header">
+                                        <h:outputText value="Ult. Fecha de entrada"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.fechaEntrada}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column styleClass="cabecera">
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha de vencimiento"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.fechaVencimiento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column styleClass="cabecera">
+                                    <f:facet name="header">
+                                        <h:outputText value="Cantidad Existente"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.cantidadExistente}"/>
+                                </p:column>
+                                <p:column styleClass="cabecera">
+                                    <f:facet name="header">
+                                        <h:outputText value="Categoria"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.fkidCategoria.nombreCategoria.toUpperCase()}"/>
+                                </p:column>
+                                <p:column styleClass="cabecera">
+                                    <f:facet name="header">
+                                        <h:outputText value="Estado"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.fkEstado.tipoEstado.toUpperCase()}"/>
+                                </p:column>
+                                <p:column styleClass="cabecera" style="border-top-right-radius: 10px;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Acciones" />
+                                    </f:facet>
+                                    <p:commandButton update=":editarInsumo:manage-product-content" process="@this" resetValues="true" class="rounded-button" icon="pi pi-pencil" onclick="PF('modalEditar').show()"> <f:setPropertyActionListener value="#{item}" target="#{insumoControlador.insumo}"/> <p:resetInput target=":editarInsumo:manage-product-content" /></p:commandButton>
+                                    <p:commandButton icon="pi pi-trash" class="ui-button-danger rounded-button" action="#{insumoControlador.inabilitarInsumo(item)}" update="tablaInsumos" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+
+                        <h:form id="editarInsumo">
+                            <p:dialog header="Editar Insumo" widgetVar="modalEditar" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+
+                                <p:outputPanel id="manage-product-content" class="ui-fluid" >
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel  for="idInsumo2" value="ID:" />
+                                        <p:inputText id="idInsumo2" value="#{insumoControlador.insumo.idInsumo}" title="IdInsumo" disabled="true"/>
+
+                                        <p:outputLabel value="Nombre Insumo:" for="nombreInsumo3" />
+                                        <p:inputText id="nombreInsumo3" value="#{insumoControlador.insumo.nombreInsumo}" title="Nombre del insumo" required="true"/>
+
+                                        <p:outputLabel value="Fecha de Vencimiento:" for="fechaVencimiento4" />
+                                        <p:calendar id="fechaVencimiento4" value="#{insumoControlador.insumo.fechaVencimiento}"  pattern="yyyy/MM/dd" />
+
+                                        <p:outputLabel value="Cantidad Existente:" for="cantidadExistente5" />
+                                        <p:inputText id="cantidadExistente5" value="#{insumoControlador.insumo.cantidadExistente}" title="Cantidad Existente" required="true"/>
+
+                                        <p:outputLabel value="Categoria:" for="fkidCategoria6" />
+                                        <h:selectOneMenu id="fkidCategoria6" value="#{insumoControlador.categoria.idCategoria}" title="Categoria">
+
+                                            <f:selectItems value="#{categoriaControlador.consultarCategorias()}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombreCategoria}"/>
+                                        </h:selectOneMenu>
+
+                                        <p:commandButton value="Guardar" action="#{insumoControlador.editarInsumo()}" oncomplete="PF('modalEditar').hide()" resetValues="true" update=":tablaInsumos"><p:confirm header="Confirmación" message="¿Estas seguro de editar este insumo?" icon="pi pi-exclamation-triangle"/></p:commandButton>
+                                        <p:commandButton value="Cancelar" onclick="PF('modalEditar').hide()" resetValues="true" action="#{insumoControlador.insumoVacio()}" />
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+
+                            </p:dialog>
+
+
+
+                        </h:form>
+
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+
+
+
+
+
+    </body>
+</html>

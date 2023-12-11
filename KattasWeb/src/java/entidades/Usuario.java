@@ -6,6 +6,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +45,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
     @NamedQuery(name = "Usuario.findByFechaRegistro", query = "SELECT u FROM Usuario u WHERE u.fechaRegistro = :fechaRegistro")})
 public class Usuario implements Serializable {
+
+    @OneToMany(mappedBy = "fkIdentificacion", fetch = FetchType.LAZY)
+    private List<Venta> ventaList;
+    @OneToMany(mappedBy = "fkIdentificacion", fetch = FetchType.LAZY)
+    private List<Pedido> pedidoList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -221,6 +229,24 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entidades.Usuario[ identificacion=" + identificacion + " ]";
+    }
+
+    @XmlTransient
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
+    }
+
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
+    }
+
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
     }
     
 }

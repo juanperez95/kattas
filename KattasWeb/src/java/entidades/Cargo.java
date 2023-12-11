@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Roberto_Diaz
+ * @author familia perez
  */
 @Entity
 @Table(name = "cargo")
@@ -39,9 +39,7 @@ public class Cargo implements Serializable {
     @NotNull
     @Column(name = "idCargo")
     private Integer idCargo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 40)
+    @Size(max = 40)
     @Column(name = "tipoCargo")
     private String tipoCargo;
     @OneToMany(mappedBy = "fkidCargo", fetch = FetchType.LAZY)
@@ -52,11 +50,6 @@ public class Cargo implements Serializable {
 
     public Cargo(Integer idCargo) {
         this.idCargo = idCargo;
-    }
-
-    public Cargo(Integer idCargo, String tipoCargo) {
-        this.idCargo = idCargo;
-        this.tipoCargo = tipoCargo;
     }
 
     public Integer getIdCargo() {

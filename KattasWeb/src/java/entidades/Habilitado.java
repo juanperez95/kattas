@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Roberto_Diaz
+ * @author familia perez
  */
 @Entity
 @Table(name = "habilitado")
@@ -39,9 +39,7 @@ public class Habilitado implements Serializable {
     @NotNull
     @Column(name = "idHabilitado")
     private Integer idHabilitado;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 40)
+    @Size(max = 40)
     @Column(name = "tipoHabilitado")
     private String tipoHabilitado;
     @OneToMany(mappedBy = "fkHabilitado", fetch = FetchType.LAZY)
@@ -52,11 +50,6 @@ public class Habilitado implements Serializable {
 
     public Habilitado(Integer idHabilitado) {
         this.idHabilitado = idHabilitado;
-    }
-
-    public Habilitado(Integer idHabilitado, String tipoHabilitado) {
-        this.idHabilitado = idHabilitado;
-        this.tipoHabilitado = tipoHabilitado;
     }
 
     public Integer getIdHabilitado() {
