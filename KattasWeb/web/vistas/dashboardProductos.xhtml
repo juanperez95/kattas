@@ -21,6 +21,12 @@
 
                         <h:form id="añadirProducto" enctype="multipart/form-data">   
                             <p:commandButton resetValues="true" value="Añadir Producto" action="#{productoControlador.productoVacio()}" onclick="PF('modal').show()" style="margin-bottom: 10px;"/>                           
+                            <p:commandButton resetValues="true" value="Grafica de estados" onclick="PF('modalGrafica').show()" style="margin-bottom: 10px;"/> 
+                            
+                            <p:dialog header="Grafica" widgetVar="modalGrafica" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+                                
+                            </p:dialog>
+                            
                             <p:dialog id="dialog" header="Añadir Producto" widgetVar="modal" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
                                 <h:panelGrid columns="2">
                                     <h:outputLabel for="idProducto" value="ID:" />
@@ -48,7 +54,7 @@
                                 <h:panelGrid columns="2">
 
                                     <p:commandButton   value="Guardar" action="#{productoControlador.crearProducto()}" oncomplete="PF('modal').hide()"  resetValues="true" update=":tablaProd: dialog message"><p:confirm header="Confirmación" message="¿Estas seguro de añadir un nuevo Producto?" icon="pi pi-exclamation-triangle"/></p:commandButton>
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"  width="350">
                                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
                                         <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
                                     </p:confirmDialog>
@@ -64,7 +70,7 @@
                                          paginator="true" paginatorPosition="bottom" 
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Resultados" >
-                                <p:column styleClass="cabecera" style="border-top-left-radius: 10px;">
+                                <p:column styleClass="cabecera" style="border-top-left-radius: 10px;" sortBy="#{productos.idProducto}">
                                     <f:facet name="header">
                                         <h:outputText value="Id"/>
                                     </f:facet>
@@ -121,7 +127,7 @@
                         <h:form id="prodInsu">
                             <p:dialog header="Agregar insumos a producto" widgetVar="moda" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
                                 <h:outputText value="ID Producto: " />
-                                <p:inputText value="#{producto.idProducto}" readonly="true" id="idProd"/>
+                                <p:inputText value="#{productoControlador.producto.idProducto}" readonly="true" id="idProd"/>
                                 <h:outputText value="Insumo para agregar al producto: " />
                                 <h:selectOneMenu id="insAdd" value="#{controladorProdInsumos.in.idInsumo}" title="InsumoAdd" required="true" requiredMessage="The FkEstado field is required.">
                                     <f:selectItems value="#{insumoControlador.consultarInsumos()}" var="insumos" itemValue="#{insumos.idInsumo}" itemLabel="#{insumos.nombreInsumo}"/>
@@ -158,14 +164,14 @@
                                             <h:outputText value="Acciones"/>
                                         </f:facet>
                                         <p:commandButton icon="pi pi-pencil" class="ui-button-primary"/>
-                                        <p:commandButton icon="pi pi-trash" action="#{controladorProdInsumos.eliminarInsumoProducto(item)}" class="ui-button-danger" update="prodInsu"/>
+                                        <p:commandButton icon="pi pi-trash" action="#{controladorProdInsumos.eliminarInsumoProducto(item)}" class="ui-button-danger" id="valorId" update="prodInsu"/>
                                     </h:column>
                                     
                                 </h:dataTable>
-                                
+                                <p:commandButton value="Agregar Insumos sobre producto" class="ui-button-success" icon="pi pi-pencil" action="#{controladorProdInsumos.agregarInsumosProducto(productoControlador.producto.idProducto)}" update="prodInsu"/>
                             </p:dialog>
                             
-
+                            
                         </h:form>
 
                         <h:form id="editarProd">

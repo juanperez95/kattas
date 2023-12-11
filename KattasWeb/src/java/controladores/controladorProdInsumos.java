@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 
 
@@ -31,7 +32,7 @@ public class controladorProdInsumos implements Serializable {
     Producto producto;
     Insumo in;
     
-    
+    @PostConstruct
     public void init(){
         prodInsum = new ProductosInsumos();
         producto = new Producto();

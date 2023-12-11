@@ -16,17 +16,26 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
+// import org.primefaces.model.chart.PieChartModel;
 
 @Named(value = "productoControlador")
 @SessionScoped
-@RequestScoped
 public class ProductoControlador implements Serializable {
 
     private Part archivo;
     private String rutaImagen;
+
+    /*private PieChartModel pieModel2;
+
+    public PieChartModel getPieModel2() {
+        return pieModel2;
+    }
+
+    public void setPieModel2(PieChartModel pieModel2) {
+        this.pieModel2 = pieModel2;
+    }*/
 
     @EJB
     ProductoFacade proFacade;
@@ -83,8 +92,8 @@ public class ProductoControlador implements Serializable {
 
     public ProductoControlador() {
     }
-    
-    public void productoVacio(){
+
+    public void productoVacio() {
         producto = new Producto();
     }
 
@@ -113,15 +122,15 @@ public class ProductoControlador implements Serializable {
             entrada.close();
 
         } catch (Exception e) {
-            System.out.println("Errores en consola : " + e.getMessage());            
+            System.out.println("Errores en consola : " + e.getMessage());
         }
 
-        producto.setImagenProducto("../images_prod/"+archivo.getSubmittedFileName()); // Ruta de la imagen
+        producto.setImagenProducto("../images_prod/" + archivo.getSubmittedFileName()); // Ruta de la imagen
         proFacade.create(producto);
         confirm(producto);
         producto = new Producto();
         producto.setIdProducto(proFacade.count() + 1);
-        
+
     }
 
     public void inabilitarProd(Producto producto) {
@@ -143,10 +152,10 @@ public class ProductoControlador implements Serializable {
     }
 
     public void eliminarConfirm(Producto producto) {
-        addMessage("¡Producto Inabilitado!", "¡Producto " + producto.getIdProducto() + " editado!");
+        addMessage("¡Producto Inabilitado!", "¡Producto " + producto.getIdProducto() + " inhabilitado!");
     }
-    
-    public void editarProducto(){
+
+    public void editarProducto() {
         producto.setFkTamaño(tamProd.find(prodTam.getIdTamaño()));
         producto.setFkEstado(estadoRepo.find(estado.getIdEstado()));
         proFacade.edit(producto);
@@ -157,5 +166,45 @@ public class ProductoControlador implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    //Implementar graficos
+    /*private void createPieModel2() {
+        pieModel2 = new PieChartModel();
+
+        int contadorStock = 0, contadorSinStock = 0, contadorStockBajo = 0; 
+        
+        List<Producto> listaProductos = proFacade.findAll();
+        
+        // Validar los estados con sus respectivos contadores.
+        for (Producto producto : listaProductos) {
+            if (producto.getFkEstado().getIdEstado() == 1) {
+                contadorStock++;
+            }
+            
+            if (producto.getFkEstado().getIdEstado() == 2) {
+                contadorStockBajo++;
+            }
+            
+            if (producto.getFkEstado().getIdEstado() == 3) {
+                contadorSinStock++;
+            }            
+        }
+        
+        pieModel2.set("En Stock", contadorStock);
+        pieModel2.set("Bajo Stock", contadorStockBajo);
+        pieModel2.set("Sin Stock", contadorSinStock);
+
+        pieModel2.setTitle("Grafica estados del producto");
+        pieModel2.setLegendPosition("e");
+        pieModel2.setFill(false);
+        pieModel2.setShowDataLabels(true);
+        pieModel2.setDiameter(150);
+        pieModel2.setShadow(false);
+        
+        // Reiniciar los valores
+        contadorStock = 0;
+        contadorSinStock = 0;
+        contadorStockBajo = 0;
+    }*/
 
 }

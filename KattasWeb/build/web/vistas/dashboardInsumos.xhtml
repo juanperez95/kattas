@@ -46,7 +46,7 @@
                                 <p:growl id="message" showDetail="true"/>
                                 <h:panelGrid columns="2">
                                     <p:commandButton   value="Guardar" action="#{insumoControlador.crearInsumo()}" oncomplete="PF('modal').hide()"  resetValues="true" update=":tablaInsumos: dialog message"><p:confirm header="Confirmación" message="¿Estas seguro de añadir un nuevo insumo?" icon="pi pi-exclamation-triangle"/></p:commandButton>
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="350">
                                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
                                         <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
                                     </p:confirmDialog>
