@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="../static/css/tabla.css" ></link>
+    </h:head>
+    <h:body>
+       
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="IdInsumo:" for="idInsumo" />
+                    <h:inputText id="idInsumo" value="#{insumoControlador.insumo.idInsumo}" title="IdInsumo" required="true" requiredMessage="The IdInsumo field is required."/>
+                    
+                    <h:outputLabel value="NombreInsumo:" for="nombreInsumo" />
+                    <h:inputText id="nombreInsumo" value="#{insumoControlador.insumo.nombreInsumo}" title="NombreInsumo" required="true" requiredMessage="The NombreInsumo field is required."/>
+                    
+                    <h:outputLabel value="FechaVencimiento:" for="fechaVencimiento" />
+                    <h:inputText id="fechaVencimiento" value="#{insumoControlador.insumo.fechaVencimiento}" title="FechaVencimiento" required="true" requiredMessage="The FechaVencimiento field is required.">                        
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    
+                    <h:outputLabel value="CantidadExistente:" for="cantidadExistente" />
+                    <h:inputText id="cantidadExistente" value="#{insumoControlador.insumo.cantidadExistente}" title="CantidadExistente" required="true" requiredMessage="The CantidadExistente field is required."/>
+                    
+                    <h:outputLabel value="FkidCategoria:" for="fkidCategoria" />
+                    <h:selectOneMenu id="fkidCategoria" value="#{insumoControlador.insumo.fkidCategoria}" title="FkidCategoria" required="true" requiredMessage="The FkidCategoria field is required.">
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{fixme}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel value="FkEstado:" for="fkEstado" />
+                    <h:selectOneMenu id="fkEstado" value="#{insumoControlador.insumo.fkEstado}" title="FkEstado" required="true" requiredMessage="The FkEstado field is required.">
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{fixme}"/>
+                    </h:selectOneMenu>
+                    
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+
+        
+    </h:body>
+</html>
+
+
+<h:form id="miFormulario">   
+                            <p:commandButton value="Añadir Insumo" onclick="PF('modal').show()" />                           
+                            <p:dialog header="Mi Modal" widgetVar="modal" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="idInsumo" value="Id Insumo:" />
+                                    <p:inputText id="idInsumo" value="#{insumoControlador.insumo.idInsumo}" title="IdInsumo" required="true"/>
+
+                                    <h:outputLabel value="NombreInsumo:" for="nombreInsumo" />
+                                    <p:inputText id="nombreInsumo" value="#{insumoControlador.insumo.nombreInsumo}" title="NombreInsumo" required="true"/>
+
+                                    <h:outputLabel value="FechaVencimiento:" for="fechaVencimiento" />
+                                    <p:calendar id="fechaVencimiento" value="#{insumoControlador.insumo.fechaVencimiento}"  pattern="yyyy/MM/dd" />
+
+                                    <h:outputLabel value="CantidadExistente:" for="cantidadExistente" />
+                                    <p:inputText id="cantidadExistente" value="#{insumoControlador.insumo.cantidadExistente}" title="CantidadExistente" required="true"/>
+
+                                    <h:outputLabel value="FkidCategoria:" for="fkidCategoria" />
+                                    <h:selectOneMenu id="fkidCategoria" value="#{insumoControlador.insumo.fkidCategoria}" title="FkidCategoria" required="true" requiredMessage="The FkidCategoria field is required.">
+                                        
+                                        <f:selectItems value="#{categoriaControlador.consultarCategorias()}" var="categoria" itemValue="#{categoria.idCategoria}" itemLabel="#{categoria.nombreCategoria}"/>
+                                    </h:selectOneMenu>
+
+                                    <h:commandButton value="Guardar" action="#{insumoControlador.crearInsumo()}"  />
+                                    <p:commandButton value="Cancelar" onclick="PF('miDialogo').hide()" />
+                                </h:panelGrid>
+                            </p:dialog>
+
+                        </h:form>

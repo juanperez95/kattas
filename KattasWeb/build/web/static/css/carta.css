@@ -1,0 +1,272 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.productos {
+  display: flex;
+  flex-wrap: wrap;
+  /*Si no caben se bajan*/
+  justify-content: space-around;
+}
+
+.producto {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 50px;
+  width: 38%;
+  height: 20vh;
+  margin: 10px;
+
+}
+
+.producto img {
+  object-fit: cover;
+  width: 200px;
+  border-radius: 15px;
+  justify-content: end;
+
+}
+
+.producto button {
+  bottom: 100px;
+  position: relative;
+  left: 25%;
+  /*Posición del botón*/
+  bottom: 0;
+  /*Posición del botón abajo*/
+  width: 50%;
+  margin: 18px;
+  padding: 15px;
+  border-radius: 18px;
+}
+
+.carrito {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Resto de los estilos como antes */
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+
+.division {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.izquierda {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 100%;
+
+}
+
+.izquierda img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.texto {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*Los elementos empiezan en la izquierda*/
+  justify-content: center;
+  /*Contenido justificado a la izquierda*/
+  text-align: center;
+  /*Texto alineado a la izquierda*/
+  margin-left: 50px;
+  /*Este es el espacio para que no este al borde*/
+  margin-right: 300px;
+  z-index: 1;
+  /*Con esto, la imagen esta encima*/
+}
+
+.texto2 {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*Los elementos empiezan en la izquierda*/
+  justify-content: center;
+  /*Contenido justificado a la izquierda*/
+  text-align: center;
+  /*Texto alineado a la izquierda*/
+  margin-left: 50px;
+  /*Este es el espacio para que no este al borde*/
+  margin-right: 300px;
+  z-index: 1;
+  /*Con esto, la imagen esta encima*/
+
+  opacity: 0.7;
+  top: 55%;
+  z-index: 1;
+  /*Con esto, la imagen esta encima*/
+}
+
+
+.derecha {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
+.derecha h1 {
+  font-size: 35px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-left: 25px;
+  text-align: start;
+}
+
+.derecha h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-left: 25px;
+  text-align: start;
+}
+
+.derecha p {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-left: 25px;
+  text-align: start;
+}
+
+
+
+.buton {
+  margin-top: 30px;
+  border: 0;
+  align-items: center;
+  /*Los elementos empiezan en el centro*/
+  justify-content: center;
+  /*Contenido justificado en el centro*/
+  text-align: center;
+  /*Texto alineado en el centro*/
+  background-color: var(--color-botonesPrimarios);
+  color: #fff;
+  width: 90%;
+  height: 40px;
+  border-radius: 19px;
+  transition: 0.2s;
+
+}
+
+.buton:hover {
+  background-color: var(--color-HoverBotones);
+}
+
+.derecha a {
+  margin-top: 10%;
+  text-decoration: none;
+  font-size: 15px;
+  color: darkgray;
+  transition: all .4s;
+  align-items: center;
+  /*Los elementos empiezan en el centro*/
+  justify-content: center;
+  /*Contenido justificado en el centro*/
+  text-align: center;
+  /*Texto alineado en el centro*/
+}
+
+.derecha .login-box a:hover {
+  color: #fff;
+}
+
+.alert {
+  text-align: center;
+  background-color: var(--color-botonesPrimarios);
+  color: var(--color-texto);
+  font-size: 14px;
+  margin-top: 30px;
+  opacity: 0;
+  animation-name: Move;
+  animation-duration: 7s;
+  border-style: none;
+}
+
+
+
+.modal-content {
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  /*Espacio entre el modal y la parte de arriba de la pagina*/
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  width: 1500px;
+  height: 50vh;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content img {
+  object-fit: cover;
+  max-width: 100%;
+  /*Tamaño de las imágenes*/
+  max-height: 100vh;
+}
+
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #777;
+  cursor: pointer;
+}

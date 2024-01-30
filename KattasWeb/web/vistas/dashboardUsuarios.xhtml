@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./dashboard.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:define name="left">
+
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="tabular--wrapper">
+            <div class="p:dataTable-container">
+                <h3 class="main--title">Usuarios</h3><br></br>
+
+                <c:if test="#{usuarioControlador.identificacion == 0}">
+
+                    <h:form> 
+
+                        <p:dataTable   filteredValue="#{usuarioControlador.usuarioLista}"   globalFilterOnly="#{usuarioControlador.globalFilterOnly}"  widgetVar="display" value="#{usuarioControlador.consultarUsuario()}" var="user" rows="7"
+                                       paginator="true" paginatorPosition="bottom" 
+                                       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                       currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} Resultados" >
+
+                            <f:facet name="header" >
+
+                                <span>Filtro</span> <i class="pi pi-filter"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('display').filter()" style="width:300px"
+                                             placeholder="Search all fields using global function" />
+
+                            </f:facet>
+                            <br></br>
+
+                            <p:column styleClass="cabecera" sortBy="#{user.identificacion}"  filterBy="#{user.identificacion}"  filterMatchMode="contains" style="border-top-left-radius: 10px;">
+                                <f:facet name="header" >
+                                    <h:outputText value="Documento" />
+                                </f:facet>
+                                <h:outputText value="#{user.identificacion}" />
+                            </p:column>
+                            <p:column styleClass="cabecera" sortBy="#{user.nombres}" filterBy="#{user.nombres}"   filterStyle="display: none;" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombres" />
+                                </f:facet>
+                                <h:outputText value="#{user.nombres}" />
+                            </p:column>
+                            <p:column styleClass="cabecera" sortBy="#{user.apellidos}" filterBy="#{user.apellidos}"  filterStyle="display: none;" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos" />
+                                </f:facet>
+                                <h:outputText value="#{user.apellidos}" />
+                            </p:column>
+                            <p:column styleClass="cabecera">
+                                <f:facet name="header">
+                                    <h:outputText value="Correo electrónico" />
+                                </f:facet>
+                                <h:outputText value="#{user.email}" />
+                            </p:column >
+                            <p:column styleClass="cabecera" sortBy="#{user.fechaNacimiento}" filterBy="#{user.fechaNacimiento}" filterMatchMode="contains"> 
+                                
+
+                                <f:facet name="header">Fecha de Nacimiento></f:facet>
+                                <h:outputText value="#{user.fechaNacimiento}">
+                                    
+                                </h:outputText>
+                            </p:column>
+                            <p:column styleClass="cabecera" >
+                                <f:facet name="header">Fecha de Registro</f:facet>
+                                <h:outputText value="#{user.fechaRegistro}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column styleClass="cabecera">
+                                <f:facet name="header">
+                                    <h:outputText value="Teléfono" />
+                                </f:facet>
+                                <h:outputText value="#{user.telefono}" />
+                            </p:column>
+                            <p:column styleClass="cabecera" style="border-top-right-radius: 10px;">
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones" />
+                                </f:facet>
+                                <p:commandButton icon="pi pi-pencil" class="rounded-button" action="#{usuarioControlador.preEditar(user)}" />
+                                <h:commandButton value="Estado" action="#{usuarioControlador.eliminar(user)}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </h:form>
+
+
+                </c:if>
+                <c:if test="#{usuarioControlador.identificacion != 0}">
+                    <h:form>
+                        <p:inputText id="id" styleClass="form-control all" value="#{usuarioControlador.identificacion}"></p:inputText>
+                        <h:commandButton  value="Filtro" action="#{usuarioControlador.filtro}"></h:commandButton>
+
+                        <h:dataTable id="display" value="#{usuarioControlador.filtro()}" var="user">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Documento" />
+                                </f:facet>
+                                <h:outputText value="#{user.identificacion}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombres" />
+                                </f:facet>
+                                <h:outputText value="#{user.nombres}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos" />
+                                </f:facet>
+                                <h:outputText value="#{user.apellidos}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Correo electrónico" />
+                                </f:facet>
+                                <h:outputText value="#{user.email}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Fecha de Nacimiento</f:facet>
+                                <h:outputText value="#{user.fechaNacimiento}">
+                                    <f:convertDateTime pattern="yyyy/MM/dd" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Fecha de Registro</f:facet>
+                                <h:outputText value="#{user.fechaRegistro}">
+                                    <f:convertDateTime pattern="yyyy/MM/dd" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Genero" />
+                                </f:facet>
+                                <h:outputText value="#{user.genero}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Teléfono" />
+                                </f:facet>
+                                <h:outputText value="#{user.telefono}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Acciones" />
+                                </f:facet>
+                                <h:commandButton value="Editar" action="#{usuarioControlador.preEditar(user)}" />
+                                <h:commandButton value="Eliminar" action="#{usuarioControlador.eliminar(user)}" />
+                            </p:column>
+                        </h:dataTable>
+                    </h:form>
+                </c:if>     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>  
+    </ui:define>
+
+</ui:composition>

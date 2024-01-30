@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../static/css/dashboard.css" ></link>
+
+
+
+
+        <link href="https://fonts.googleapis.com/css2?family=Lilita+One;display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Alkatra:wght@600;display=swap" rel="stylesheet"></link>
+        <title>Katta´s pizza</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"></link>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></link>
+        <script src="https://kit.fontawesome.com/b06d3acf28.js" crossorigin="anonymous"></script>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+
+        <ui:insert name="left">
+
+        </ui:insert>
+        <div class="sidebar">
+            <div class="logo">
+                <img src="../static/images/Logoicono.png"></img>
+            </div>
+            <ul class="menu">
+                <li>
+                    <a href="dashboardUsuarios.xhtml">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+                <c:if test="#{usuarioControlador.retornoSesion().fkPerfil.idPerfil != 3}"> <!-- Mostrar a los usuarios estas opciones 
+                    diferentes al perfil de cliente -->
+                    <li >
+                        <a href="dashboardInsumos.xhtml">
+                            <i class="fa-solid fa-store"></i>
+                            <span>Insumos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dashboardProductos.xhtml">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <span>Productos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>Ventas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <span>Domicilios</span>
+                        </a>
+                    </li>
+                </c:if>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-gears"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="#">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <h:form>
+                            <h:commandLink action="#{usuarioControlador.cerrarSesion()}"><span>Cerrar sesión</span></h:commandLink>
+                        </h:form>                       
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                    <div class="header--title">
+                        <h2>Katta' pizza - Bienvenido/a #{usuarioControlador.retornoSesion().nombres} #{usuarioControlador.retornoSesion().apellidos}</h2>
+                    </div>
+                    <div class="user--info">
+                        <div class="search--box">
+                        </div>
+                        <img src="../static/images/usuario.jpg"></img>
+                    </div>
+
+                </div>
+
+            <ui:insert name="content">
+                
+
+            </ui:insert>
+        </div>
+
+
+
+    </h:body>
+
+</html>
